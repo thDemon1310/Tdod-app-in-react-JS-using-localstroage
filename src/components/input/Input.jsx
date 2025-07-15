@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const Input = () => {
+const Input = ({ ArrDataforId }) => {
   const [inputData, setInputData] = useState("");
 
   const todoId = useRef(0);
 
   const [Todo, setTodo] = useState({
-    id: Number,
-    task: String,
-    isDone: Boolean,
+    id: 0,
+    task: "",
+    isDone: false,
   });
 
   useEffect(() => {
@@ -24,30 +24,16 @@ const Input = () => {
         task: inputData,
         isDone: false,
       });
+      setInputData(""); // clear input
     } else {
       alert(`Please enter you TODO`);
     }
   };
 
   const handleTodoId = async () => {
-    const arrData = handleRefreshError();
+    const arrData = await ArrDataforId();
     todoId.current = arrData.length + 1;
     return todoId.current;
-  };
-
-  const handleRefreshError = () => {
-    const localLength = localStorage.length;
-    const arr = [];
-    for (let i = 1; i <= localLength; i++) {
-      let key = `Task${i}`;
-      let localValue = localStorage.getItem(key);
-      if (localValue == null || localValue == "") {
-        break;
-      } else {
-        arr.push(localValue);
-      }
-    }
-    return arr;
   };
 
   return (
