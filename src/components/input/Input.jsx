@@ -12,6 +12,30 @@ const Input = () => {
   });
 
   useEffect(() => {
+    const key = `Task${Todo.id}`;
+    const value = JSON.stringify(Todo);
+    localStorage.setItem(key, value);
+  }, [Todo]);
+
+  const handleClick = async () => {
+    if (inputData !== "" && inputData !== null) {
+      setTodo({
+        id: await handleTodoId(),
+        task: inputData,
+        isDone: false,
+      });
+    } else {
+      alert(`Please enter you TODO`);
+    }
+  };
+
+  const handleTodoId = async () => {
+    const arrData = handleRefreshError();
+    todoId.current = arrData.length + 1;
+    return todoId.current;
+  };
+
+  const handleRefreshError = () => {
     const localLength = localStorage.length;
     const arr = [];
     for (let i = 1; i <= localLength; i++) {
@@ -22,33 +46,8 @@ const Input = () => {
       } else {
         arr.push(localValue);
       }
-      const arrLength = arr.length;
-      todoId.current = arrLength;
-      console.log(todoId.current);
     }
-  }, []);
-
-  useEffect(() => {
-    const key = `Task${Todo.id}`;
-    const value = JSON.stringify(Todo);
-    localStorage.setItem(key, value);
-  }, [Todo]);
-
-  const handleClick = () => {
-    if (inputData !== "" && inputData !== null) {
-      setTodo({
-        id: handleTodoId(),
-        task: inputData,
-        isDone: false,
-      });
-    } else {
-      alert(`Please enter you TODO`);
-    }
-  };
-
-  const handleTodoId = () => {
-    todoId.current = todoId.current + 1;
-    return todoId.current;
+    return arr;
   };
 
   return (
