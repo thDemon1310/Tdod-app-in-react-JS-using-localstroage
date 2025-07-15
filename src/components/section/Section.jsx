@@ -1,5 +1,6 @@
 import React from "react";
 import Input from "../input/Input";
+import TodoList from "../todoList/TodoList";
 const Section = () => {
   return (
     <div className="w-250 rounded-2xl min-h-4/5 mt-5 p-15 pt-11 flex-col bg-violet-300 m-auto flex items-center ">
@@ -9,6 +10,14 @@ const Section = () => {
       <div className="w-full min-h-full mt-7 p-3 ">
         <h2 className="font-bold text-[22px]">Add a Todo</h2>
         <Input />
+        <div className="mt-3 flex flex-col h-10 justify-between">
+          <div className="flex gap-2">
+            <input type="checkbox" name="finsihed" id="finish" className="accent-purple-500/75 "/>
+            <label htmlFor="finish">Show Finished</label>
+          </div>
+          <hr  />
+        </div>
+        <TodoList />
       </div>
     </div>
   );

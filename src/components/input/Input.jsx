@@ -2,12 +2,31 @@ import React, { useState, useRef, useEffect } from "react";
 
 const Input = () => {
   const [inputData, setInputData] = useState("");
+
   const todoId = useRef(0);
+
   const [Todo, setTodo] = useState({
     id: Number,
     task: String,
     isDone: Boolean,
   });
+
+  useEffect(() => {
+    const localLength = localStorage.length;
+    const arr = [];
+    for (let i = 1; i <= localLength; i++) {
+      let key = `Task${i}`;
+      let localValue = localStorage.getItem(key);
+      if (localValue == null || localValue == "") {
+        break;
+      } else {
+        arr.push(localValue);
+      }
+      const arrLength = arr.length;
+      todoId.current = arrLength;
+      console.log(todoId.current);
+    }
+  }, []);
 
   useEffect(() => {
     const key = `Task${Todo.id}`;
@@ -16,21 +35,22 @@ const Input = () => {
   }, [Todo]);
 
   const handleClick = () => {
-    setTodo({
-      id: handleTodoId(),
-      task: inputData,
-      isDone: false,
-    });
+    if (inputData !== "" && inputData !== null) {
+      setTodo({
+        id: handleTodoId(),
+        task: inputData,
+        isDone: false,
+      });
+    } else {
+      alert(`Please enter you TODO`);
+    }
   };
 
   const handleTodoId = () => {
     todoId.current = todoId.current + 1;
-    if (localStorage.length !== 0) {
-      return localStorage.length + 1;
-    } else {
-      return todoId.current;
-    }
+    return todoId.current;
   };
+
   return (
     <div className="flex justify-between gap-4 mt-1">
       <input
