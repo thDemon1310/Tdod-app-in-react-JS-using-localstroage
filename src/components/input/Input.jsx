@@ -1,39 +1,55 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const Input = ({ ArrDataforId }) => {
+const Input = () => {
   const [inputData, setInputData] = useState("");
 
   const todoId = useRef(0);
 
-  const [Todo, setTodo] = useState({
-    id: 0,
-    task: "",
-    isDone: false,
-  });
+  const [Todo, setTodo] = useState([]);
 
   useEffect(() => {
-    const key = `Task${Todo.id}`;
-    const value = JSON.stringify(Todo);
-    localStorage.setItem(key, value);
+    const key = `Task`;
+    let arr = JSON.parse(localStorage.getItem(key));
+    if (arr !== null) {
+      setTodo(arr);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (Todo.length !== 0) {
+      const key = `Task`;
+      const value = JSON.stringify(Todo);
+      localStorage.setItem(key, value);
+    }
   }, [Todo]);
 
   const handleClick = async () => {
     if (inputData !== "" && inputData !== null) {
-      setTodo({
-        id: await handleTodoId(),
-        task: inputData,
-        isDone: false,
-      });
-      setInputData(""); // clear input
+      try {
+        await handleTodoId();
+        const setData = {
+          id: todoId.current,
+          task: inputData,
+          isDone: false,
+        };
+        setTodo([...Todo, setData]);
+        setInputData(""); // clear input
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       alert(`Please enter you TODO`);
     }
   };
 
   const handleTodoId = async () => {
-    const arrData = await ArrDataforId();
-    todoId.current = arrData.length + 1;
-    return todoId.current;
+    const key = `Task`;
+    let arr = await JSON.parse(localStorage.getItem(key));
+    if (arr !== null) {
+      todoId.current = arr.length + 1;
+    } else {
+      todoId.current = todoId.current + 1;
+    }
   };
 
   return (
