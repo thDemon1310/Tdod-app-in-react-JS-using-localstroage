@@ -31,7 +31,7 @@ const Section = () => {
       <div className="w-full min-h-full mt-7 p-3 ">
         <h2 className="font-bold text-[22px]">Add a Todo</h2>
         {/* passing parent state to child for adding input into state and it will also triger parent rerender */}
-        <Input todoList={todoList} setTodoList={setTodoList} /> 
+        <Input todoList={todoList} setTodoList={setTodoList} />
         <div className="mt-3 flex flex-col h-10 justify-between">
           <div className="flex gap-2">
             <input
@@ -44,7 +44,7 @@ const Section = () => {
           </div>
           <hr />
         </div>
-        <TodoList todoList={todoList} />
+        <TodoList todoList={todoList} setTodoList={setTodoList} />
       </div>
     </div>
   );
