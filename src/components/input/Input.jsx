@@ -1,10 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 
 const Input = ({ todoList, setTodoList }) => {
   // this state will handle input
   const [InputData, setInputData] = useState("");
-
-  const todoId = useRef(todoList.length);
 
   const handleClick = async () => {
     // is some one passed single space it will not get saved to state
@@ -13,12 +11,12 @@ const Input = ({ todoList, setTodoList }) => {
       alert("Please enter a task");
       return;
     }
-
     const newTodo = {
-      id: todoId.current + 1,
+      id: todoList.length + 1,
       task: InputData,
       isDone: false,
     };
+    console.log(newTodo);
     setTodoList([...todoList, newTodo]);
     setInputData("");
   };
@@ -27,7 +25,7 @@ const Input = ({ todoList, setTodoList }) => {
       <input
         type="text"
         name="todoInput"
-        id=""
+        id="todoInput"
         value={InputData}
         className="border rounded-3xl p-2 w-full text-[20px]"
         placeholder="Enter your Todo here!!"
