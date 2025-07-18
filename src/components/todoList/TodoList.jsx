@@ -16,7 +16,9 @@ const TodoList = ({ todoList, setTodoList }) => {
         className="w-full flex flex-col gap-3  rounded-xl p-4 shadow-inner  max-h-90 overflow-y-auto"
       >
         {todoList.length > 0 ? (
-          todoList.map((data) => <Card key={data.id} Task={data.task} />)
+          todoList.map((data) => (
+            <Card key={data.id} todoData={data} setTodoList={setTodoList} />
+          ))
         ) : (
           <p className="text-gray-500 italic text-center">No tasks yet.</p>
         )}
