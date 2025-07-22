@@ -15,11 +15,25 @@ const Card = ({ todoData, setTodoList }) => {
   }, [isEditing]);
 
   const handleEditSave = () => {
+    setTodoList((prevState) => {
+      return prevState.map((item) => {
+        if (item.id === todoData.id) {
+          return { ...item, task: editValue };
+        } else {
+          return item;
+        }
+      });
+    });
     setIsEditing(false);
   };
 
   const handleCheckBox = (event) => {
     setCheck(event.target.checked);
+    setTodoList((prevState) =>
+      prevState.map((item) =>
+        item.id === todoData.id ? { ...item, isDone: !check } : item
+      )
+    );
   };
 
   return (
