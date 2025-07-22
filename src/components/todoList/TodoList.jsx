@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./card/Card";
 
-const TodoList = ({ todoList, setTodoList }) => {
+const TodoList = ({ todoList, setTodoList, finished }) => {
   const handleClear = () => {
     localStorage.removeItem("Task");
     setTodoList([]);
@@ -17,7 +17,12 @@ const TodoList = ({ todoList, setTodoList }) => {
       >
         {todoList.length > 0 ? (
           todoList.map((data) => (
-            <Card key={data.id} todoData={data} setTodoList={setTodoList} />
+            <Card
+              key={data.id}
+              todoData={data}
+              setTodoList={setTodoList}
+              finished={finished}
+            />
           ))
         ) : (
           <p className="text-gray-500 italic text-center">No tasks yet.</p>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Input from "../../input/Input";
 
-const Card = ({ todoData, setTodoList }) => {
+const Card = ({ todoData, setTodoList, finished }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(todoData.task);
   const inputRef = useRef(null);
@@ -36,8 +36,27 @@ const Card = ({ todoData, setTodoList }) => {
     );
   };
 
+  const handleDelete = async () => {
+    const data = await JSON.parse(localStorage.getItem("Task"));
+    if (data.length == 1) {
+      localStorage.removeItem("Task");
+    } else {
+      setTodoList((prevState) =>
+        prevState.filter((item) => item.id !== todoData.id)
+      );
+    }
+  };
+
   return (
-    <div className="min-h-16 bg-blue-700 rounded-xl shadow-md flex items-center justify-between px-4 py-2 gap-4 transition-all hover:shadow-lg">
+    <div
+      className={
+        todoData.isDone
+          ? finished
+            ? "min-h-16 bg-blue-700 rounded-xl shadow-md flex items-center justify-between px-4 py-2 gap-4 transition-all hover:shadow-lg"
+            : "min-h-16 bg-blue-700 rounded-xl shadow-md flex items-center justify-between px-4 py-2 gap-4 transition-all hover:shadow-lg invisible"
+          : "min-h-16 bg-blue-700 rounded-xl shadow-md flex items-center justify-between px-4 py-2 gap-4 transition-all hover:shadow-lg "
+      }
+    >
       <input
         type="checkbox"
         className="accent-purple-600 scale-125 cursor-pointer"
@@ -88,7 +107,10 @@ const Card = ({ todoData, setTodoList }) => {
           </button>
         )}
 
-        <button className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-semibold hover:bg-red-700 transition-all">
+        <button
+          className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-semibold hover:bg-red-700 transition-all"
+          onClick={handleDelete}
+        >
           Delete
         </button>
       </div>

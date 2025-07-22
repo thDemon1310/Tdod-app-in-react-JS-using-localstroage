@@ -5,6 +5,8 @@ const Section = () => {
   // initlisation a state for todo list in this data will get sved and showed from
   const [todoList, setTodoList] = useState([]);
 
+  const [finished, setFinished] = useState(false);
+
   // this useEffect Will run on mounting or when page is refreshed for getting data from local storage and setting it to todoList state
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("Task"));
@@ -39,12 +41,16 @@ const Section = () => {
               name="finsihed"
               id="finish"
               className="accent-purple-500/75 "
+              checked={finished}
+              onChange={(event) => {
+                setFinished(event.target.checked);
+              }}
             />
             <label htmlFor="finish">Show Finished</label>
           </div>
           <hr />
         </div>
-        <TodoList todoList={todoList} setTodoList={setTodoList} />
+        <TodoList todoList={todoList} setTodoList={setTodoList} finished={finished}/>
       </div>
     </div>
   );
