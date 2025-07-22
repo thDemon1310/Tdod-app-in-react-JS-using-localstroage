@@ -6,6 +6,8 @@ const Card = ({ todoData, setTodoList }) => {
   const [editValue, setEditValue] = useState(todoData.task);
   const inputRef = useRef(null);
 
+  const [check, setCheck] = useState(todoData.isDone);
+
   useEffect(() => {
     if (isEditing) {
       inputRef.current?.focus(); // A ref might not yet be attached to a DOM element (e.g., before the component mounts).
@@ -16,12 +18,17 @@ const Card = ({ todoData, setTodoList }) => {
     setIsEditing(false);
   };
 
+  const handleCheckBox = (event) => {
+    setCheck(event.target.checked);
+  };
+
   return (
     <div className="min-h-16 bg-blue-700 rounded-xl shadow-md flex items-center justify-between px-4 py-2 gap-4 transition-all hover:shadow-lg">
       <input
         type="checkbox"
-        name="done"
         className="accent-purple-600 scale-125 cursor-pointer"
+        checked={check}
+        onChange={handleCheckBox}
       />
 
       <div className="w-full">
@@ -36,7 +43,13 @@ const Card = ({ todoData, setTodoList }) => {
             }}
           />
         ) : (
-          <h3 className="text-lg font-medium text-white cursor-pointer">
+          <h3
+            className={
+              check
+                ? "line-through text-lg font-medium text-yellow-400"
+                : "text-lg font-medium text-white"
+            }
+          >
             {todoData.task}
           </h3>
         )}
