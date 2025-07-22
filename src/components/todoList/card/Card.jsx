@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 import Input from "../../input/Input";
 
 const Card = ({ todoData, setTodoList, finished }) => {
@@ -103,7 +105,7 @@ const Card = ({ todoData, setTodoList, finished }) => {
               setIsEditing(true);
             }}
           >
-            Edit
+            <FaEdit />
           </button>
         )}
 
@@ -111,7 +113,7 @@ const Card = ({ todoData, setTodoList, finished }) => {
           className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-semibold hover:bg-red-700 transition-all"
           onClick={handleDelete}
         >
-          Delete
+          <MdDeleteForever />
         </button>
       </div>
     </div>
